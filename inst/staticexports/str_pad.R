@@ -1,6 +1,6 @@
 str_pad <- function(string, width, side = c("left", "right", "both"), pad = " ") {
   stopifnot(
-  	is.numeric(width),
+    is.numeric(width),
     width > 0,
     nchar(pad) == 1
   )
@@ -8,13 +8,13 @@ str_pad <- function(string, width, side = c("left", "right", "both"), pad = " ")
   side <- match.arg(side)
 
   rep_pad <- function(width) {
-  	vapply(
-  		width,
-  		function(x) {
-  			paste0(rep.int(pad, max(x, 0)), collapse = "")
-  		},
-  		""
-  	)
+    vapply(
+      width,
+      function(x) {
+        paste0(rep.int(pad, max(x, 0)), collapse = "")
+      },
+      ""
+    )
   }
 
   pad_side <- width - nchar(string)
