@@ -1,5 +1,6 @@
 str_pad <- function(string, width, side = c("left", "right", "both"), pad = " ") {
   stopifnot(
+  	is.numeric(width),
     width > 0,
     nchar(pad) == 1
   )
