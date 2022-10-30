@@ -1,6 +1,9 @@
-#' Keep strings matching a pattern
+# `R/str_remove.R` is imported from `inst/staticexports/str_remove.R`. 
+# Please edit that file instead.
+
+#' Remove matched patterns in a string
 #'
-#' Dependency-free drop-in alternative for `stringr::str_subset()`.
+#' Dependency-free drop-in alternative for `stringr::str_remove()`.
 #'
 #' @param string Input vector.
 #'   Either a character vector, or something coercible to one.
@@ -13,35 +16,28 @@
 #'
 #'   Match a fixed string (i.e. by comparing only bytes), using [fixed()].
 #'   This is fast, but approximate.
-#'
-#' @param negate If `TRUE`, return non-matching elements.
 #'
 #' @return A character vector.
-#' @noRd
-str_subset <- function(string, pattern, negate = FALSE) {
+#' @export
+str_remove <- function(string, pattern) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
 
-	result <- Map(
-		function(string, pattern) {
-			grep(
-				pattern,
-				x = string,
-				ignore.case = ignore.case,
-				perl = !is_fixed,
-				fixed = is_fixed,
-				invert = negate
-			)
-		},
-		string, pattern, USE.NAMES = FALSE
-	)
+	sub <- Vectorize(sub, c("pattern", "x"), USE.NAMES = FALSE)
 
-	string[which(lengths(result) > 0)]
+	sub(
+		pattern,
+		replacement = "",
+		x = string,
+		ignore.case = ignore.case,
+		perl = !is_fixed,
+		fixed = is_fixed
+	)
 }
 
-#' Find positions of strings matching a pattern
+#' Remove matched patterns in a string
 #'
-#' Dependency-free drop-in alternative for `stringr::str_which()`.
+#' Dependency-free drop-in alternative for `stringr::str_remove_all()`.
 #'
 #' @param string Input vector.
 #'   Either a character vector, or something coercible to one.
@@ -55,27 +51,20 @@ str_subset <- function(string, pattern, negate = FALSE) {
 #'   Match a fixed string (i.e. by comparing only bytes), using [fixed()].
 #'   This is fast, but approximate.
 #'
-#' @param negate If `TRUE`, return non-matching elements.
-#'
-#' @return An integer vector.
-#' @noRd
-str_which <- function(string, pattern, negate = FALSE) {
+#' @return A character vector.
+#' @export
+str_remove_all <- function(string, pattern) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
 
-	result <- Map(
-		function(string, pattern) {
-			grep(
-				pattern,
-				x = string,
-				ignore.case = ignore.case,
-				perl = !is_fixed,
-				fixed = is_fixed,
-				invert = negate
-			)
-		},
-		string, pattern, USE.NAMES = FALSE
-	)
+	gsub <- Vectorize(gsub, c("pattern", "x"), USE.NAMES = FALSE)
 
-	which(lengths(result) > 0)
+	gsub(
+		pattern,
+		replacement = "",
+		x = string,
+		ignore.case = ignore.case,
+		perl = !is_fixed,
+		fixed = is_fixed
+	)
 }

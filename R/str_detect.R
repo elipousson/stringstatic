@@ -1,3 +1,6 @@
+# `R/str_detect.R` is imported from `inst/staticexports/str_detect.R`. 
+# Please edit that file instead.
+
 #' Detect the presence or absence of a pattern in a string
 #'
 #' Dependency-free drop-in alternative for `stringr::str_detect()`.
@@ -17,7 +20,7 @@
 #' @param negate If `TRUE`, return non-matching elements.
 #'
 #' @return A logical vector.
-#' @noRd
+#' @export
 str_detect <- function(string, pattern, negate = FALSE) {
 	is_fixed <- inherits(pattern, "fixed")
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
@@ -57,7 +60,7 @@ str_detect <- function(string, pattern, negate = FALSE) {
 #' @param negate If `TRUE`, return non-matching elements.
 #'
 #' @return A logical vector.
-#' @noRd
+#' @export
 str_starts <- function(string, pattern, negate = FALSE) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
@@ -97,7 +100,7 @@ str_starts <- function(string, pattern, negate = FALSE) {
 #' @param negate If `TRUE`, return non-matching elements.
 #'
 #' @return A logical vector.
-#' @noRd
+#' @export
 str_ends <- function(string, pattern, negate = FALSE) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")

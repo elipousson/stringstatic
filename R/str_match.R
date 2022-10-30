@@ -1,3 +1,6 @@
+# `R/str_match.R` is imported from `inst/staticexports/str_match.R`. 
+# Please edit that file instead.
+
 #' Extract matched groups from a string
 #'
 #' Dependency-free drop-in alternative for `stringr::str_match()`.
@@ -17,7 +20,7 @@
 #' @return A character matrix.
 #'   The first column is the complete match,
 #'   followed by one column for each capture group.
-#' @noRd
+#' @export
 str_match <- function(string, pattern) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")

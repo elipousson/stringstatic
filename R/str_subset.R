@@ -1,3 +1,6 @@
+# `R/str_subset.R` is imported from `inst/staticexports/str_subset.R`. 
+# Please edit that file instead.
+
 #' Keep strings matching a pattern
 #'
 #' Dependency-free drop-in alternative for `stringr::str_subset()`.
@@ -17,7 +20,7 @@
 #' @param negate If `TRUE`, return non-matching elements.
 #'
 #' @return A character vector.
-#' @noRd
+#' @export
 str_subset <- function(string, pattern, negate = FALSE) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
@@ -58,7 +61,7 @@ str_subset <- function(string, pattern, negate = FALSE) {
 #' @param negate If `TRUE`, return non-matching elements.
 #'
 #' @return An integer vector.
-#' @noRd
+#' @export
 str_which <- function(string, pattern, negate = FALSE) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
