@@ -20,13 +20,11 @@
 #' @param pad Single padding character (default is a space).
 #' @param use_width If `FALSE`,
 #'   use the length of the string instead of the width;
-#'   see [str_width()]/[str_length()] for the difference.
+#'   see [str_width()] or [str_length()] for the difference.
 #'
 #' @return A character vector.
 #' @export
-str_pad <- function(
-		string, width, side = c("left", "right", "both"), pad = " ", use_width = TRUE
-) {
+str_pad <- function(string, width, side = c("left", "right", "both"), pad = " ", use_width = TRUE) {
 	if (!is.numeric(width)) {
 		return(string[NA])
 	}
