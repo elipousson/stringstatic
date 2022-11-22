@@ -21,5 +21,12 @@ Useful links:
 \author{
 \strong{Maintainer}: Alexander Rossell Hayes \email{alexander@rossellhayes.com} (\href{https://orcid.org/0000-0001-9412-0457}{ORCID}) [copyright holder]
 
+Other contributors:
+\itemize{
+  \item Eli Pousson \email{eli.pousson@gmail.com} (\href{https://orcid.org/0000-0001-8280-1706}{ORCID}) (str_pad() function) [contributor]
+  \item Hadley Wickham \email{hadley@rstudio.com} (stringr package) [contributor, copyright holder]
+  \item RStudio (stringr package) [copyright holder]
+}
+
 }
 \keyword{internal}

@@ -2,6 +2,8 @@
 #'
 #' Dependency-free drop-in alternative for `stringr::str_match()`.
 #'
+#' @source Adapted from the [stringr](https://stringr.tidyverse.org/) package.
+#'
 #' @param string Input vector.
 #'   Either a character vector, or something coercible to one.
 #'
@@ -22,8 +24,12 @@ str_match <- function(string, pattern) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
 
+	if (length(string) == 0 || length(pattern) == 0) return(matrix(character(0)))
+
 	matches <- mapply(
 		function(string, pattern) {
+			if (is.na(string) || is.na(pattern)) return(NA_character_)
+
 			regmatches(
 				x = string,
 				m = regexec(
@@ -41,10 +47,7 @@ str_match <- function(string, pattern) {
 	length <- max(lengths(matches))
 	matches <- lapply(matches, `[`, seq_len(length))
 
-	matrix(
-		as.character(unlist(matches, use.names = FALSE)),
-		nrow = length(matches),
-		ncol = length,
-		byrow = TRUE
-	)
+	result <- do.call(rbind, matches)
+	result[result == ""] <- NA_character_
+	result
 }

@@ -2,6 +2,8 @@
 #'
 #' Dependency-free drop-in alternative for `stringr::str_extract()`.
 #'
+#' @source Adapted from the [stringr](https://stringr.tidyverse.org/) package.
+#'
 #' @param string Input vector.
 #'   Either a character vector, or something coercible to one.
 #'
@@ -22,8 +24,12 @@ str_extract <- function(string, pattern) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
 
+	if (length(string) == 0 || length(pattern) == 0) return(character(0))
+
 	result <- Map(
 		function(string, pattern) {
+			if (is.na(string) || is.na(pattern)) return(NA_character_)
+
 			regmatches(
 				x = string,
 				m = regexpr(
@@ -45,6 +51,8 @@ str_extract <- function(string, pattern) {
 #' Extract matching patterns from a string
 #'
 #' Dependency-free drop-in alternative for `stringr::str_extract_all()`.
+#'
+#' @source Adapted from the [stringr](https://stringr.tidyverse.org/) package.
 #'
 #' @param string Input vector.
 #'   Either a character vector, or something coercible to one.
@@ -68,8 +76,12 @@ str_extract_all <- function(string, pattern, simplify = FALSE) {
 	ignore.case <- isTRUE(attr(pattern, "options")$case_insensitive)
 	is_fixed <- !ignore.case && inherits(pattern, "fixed")
 
+	if (length(string) == 0 || length(pattern) == 0) return(list())
+
 	result <- mapply(
 		function(string, pattern) {
+			if (is.na(string) || is.na(pattern)) return(list(NA_character_))
+
 			regmatches(
 				x = string,
 				m = gregexpr(
@@ -84,18 +96,10 @@ str_extract_all <- function(string, pattern, simplify = FALSE) {
 		string, pattern, USE.NAMES = FALSE
 	)
 
-	result[lengths(result) == 0] <- NA_character_
-
 	if (isTRUE(simplify)) {
 		max_length <- max(lengths(result))
-
-		result <- t(vapply(
-			result,
-			function(x) x[seq_len(max_length)],
-			character(max_length)
-		))
-
-		result[is.na(result)] <- ""
+		result <- lapply(result, function(x) c(x, rep("", max_length - length(x))))
+		result <- do.call(rbind, result)
 	}
 
 	result

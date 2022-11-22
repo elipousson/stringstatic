@@ -1,3 +1,28 @@
+# These tests are adapted from tests in the stringr package
+# https://github.com/tidyverse/stringr
+#
+# stringr is released under the MIT License
+#
+# Copyright (c) 2020 stringr authors
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# 	The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 test_that("single pattern extracted correctly", {
 	test <- c("one two three", "a b c")
 
@@ -66,3 +91,23 @@ test_that("can use fixed() and coll()", {
 # 	# 	list(c("a", "b", "c"))
 # 	# )
 # })
+
+test_that("edge cases", {
+	expect_equal(str_extract(NA, "a"), NA_character_)
+	expect_equal(str_extract_all(NA, "a"), list(NA_character_))
+
+	expect_equal(str_extract(c(NA, "a"), "a"), c(NA, "a"))
+	expect_equal(str_extract_all(c(NA, "a"), "a"), list(NA_character_, "a"))
+
+	expect_equal(str_extract(character(0), "a"), character(0))
+	expect_equal(str_extract_all(character(0), "a"), list())
+
+	expect_equal(str_extract("a", NA_character_), NA_character_)
+	expect_equal(str_extract_all("a", NA_character_), list(NA_character_))
+
+	expect_equal(str_extract("a", c(NA, "a")), c(NA, "a"))
+	expect_equal(str_extract_all("a", c(NA, "a")), list(NA_character_, "a"))
+
+	expect_equal(str_extract("a", character(0)), character(0))
+	expect_equal(str_extract_all("a", character(0)), list())
+})
